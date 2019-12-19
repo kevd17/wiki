@@ -1,18 +1,6 @@
 <template lang="pug">
   v-app(v-scroll='upBtnScroll', :dark='darkMode')
     nav-header
-    v-navigation-drawer(
-      :class='darkMode ? `grey darken-4-d4` : `primary`'
-      dark
-      app
-      clipped
-      mobile-break-point='600'
-      :temporary='$vuetify.breakpoint.mdAndDown'
-      v-model='navShown'
-      :right='$vuetify.rtl'
-      )
-      vue-scroll(:ops='scrollStyle')
-        nav-sidebar(:color='darkMode ? `grey darken-4-d4` : `primary`', :items='sidebar')
 
     v-fab-transition
       v-btn(
