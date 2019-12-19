@@ -245,7 +245,7 @@ setOptions({
     if (file.name === 'image.png') {
       return `Image_${moment().format('YYYYMMDD_hmmss')}${file.extension}`
     } else {
-      return file.name
+      return `${file.basename}_${moment().format('YYYYMMDD_hmmss')}${file.extension}`
     }
   }
 })
