@@ -40,6 +40,7 @@ server/views/setup.pug
 # IDE exclude
 .idea
 *.sublime-*
+.history
 
 # Test results
 test-results/
