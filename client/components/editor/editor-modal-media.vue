@@ -228,8 +228,10 @@
 <script>
 import _ from 'lodash'
 import { get, sync } from 'vuex-pathify'
-import vueFilePond from 'vue-filepond'
+import vueFilePond, { setOptions } from 'vue-filepond'
 import 'filepond/dist/filepond.min.css'
+import FilePondPluginFileRename from 'filepond-plugin-file-rename'
+import moment from 'moment'
 
 import listAssetQuery from 'gql/editor/editor-media-query-list.gql'
 import listFolderAssetQuery from 'gql/editor/editor-media-query-folder-list.gql'
@@ -237,7 +239,16 @@ import createAssetFolderMutation from 'gql/editor/editor-media-mutation-folder-c
 import renameAssetMutation from 'gql/editor/editor-media-mutation-asset-rename.gql'
 import deleteAssetMutation from 'gql/editor/editor-media-mutation-asset-delete.gql'
 
-const FilePond = vueFilePond()
+const FilePond = vueFilePond(FilePondPluginFileRename)
+setOptions({
+  fileRenameFunction: (file) => {
+    if (file.name === 'image.png') {
+      return `Image_${moment().format('YYYYMMDD_hmmss')}${file.extension}`
+    } else {
+      return file.name
+    }
+  }
+})
 const localeSegmentRegex = /^[A-Z]{2}(-[A-Z]{2})?$/i
 const disallowedFolderChars = /[A-Z()=.!@#$%?&*+`~<>,;:\\/[\]¬{| ]/
 
