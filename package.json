@@ -73,7 +73,6 @@
     "filesize": "6.0.1",
 =======
     "file-type": "12.3.1",
-    "filepond-plugin-file-rename": "1.1.4",
     "filesize": "5.0.3",
 >>>>>>> Rename the image.png file when copy/paste
     "fs-extra": "8.1.0",
@@ -229,8 +228,14 @@
     "eslint-plugin-standard": "4.0.1",
     "eslint-plugin-vue": "6.0.1",
     "fibers": "4.0.2",
+<<<<<<< HEAD
     "file-loader": "5.0.2",
     "filepond": "4.9.2",
+=======
+    "file-loader": "4.2.0",
+    "filepond": "4.7.2",
+    "filepond-plugin-file-rename": "1.1.4",
+>>>>>>> filepond-plugin-file-rename to devDependencies
     "filepond-plugin-file-validate-type": "1.2.4",
     "filesize.js": "2.0.0",
     "graphql-persisted-document-loader": "2.0.0",
