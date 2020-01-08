@@ -48,7 +48,7 @@ test-results/
 .scannerwork
 
 # Localization Resources
-/server/locales/**/*.yml
+#/server/locales/**/*.yml
 
 # MacOS
 .DS_Store
