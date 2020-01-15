@@ -4,7 +4,7 @@
   "releaseDate": "2019-01-01T01:01:01.000Z",
   "description": "A modern, lightweight and powerful wiki app built on NodeJS, Git and Markdown",
   "main": "wiki.js",
-  "dev": true,
+  "dev": false,
   "scripts": {
     "start": "node server",
     "dev": "node dev",
@@ -37,6 +37,7 @@
   "dependencies": {
     "@aoberoi/passport-slack": "1.0.5",
     "@bugsnag/js": "6.4.3",
+    "@elastic/elasticsearch": "7.5.0",
     "@exlinc/keycloak-passport": "1.0.2",
     "algoliasearch": "3.35.1",
     "apollo-fetch": "0.7.0",
@@ -62,19 +63,12 @@
     "diff": "4.0.1",
     "diff2html": "2.12.1",
     "dotize": "0.3.0",
-    "elasticsearch6": "npm:@elastic/elasticsearch@6",
-    "elasticsearch7": "npm:@elastic/elasticsearch@7",
     "emoji-regex": "8.0.0",
     "express": "4.17.1",
     "express-brute": "1.0.1",
     "express-session": "1.17.0",
-<<<<<<< HEAD
     "file-type": "12.4.0",
     "filesize": "6.0.1",
-=======
-    "file-type": "12.3.1",
-    "filesize": "5.0.3",
->>>>>>> Rename the image.png file when copy/paste
     "fs-extra": "8.1.0",
     "getos": "3.1.1",
     "graphql": "14.5.8",
