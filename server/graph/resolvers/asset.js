@@ -47,13 +47,14 @@ module.exports = {
           slug: folderSlug
         }).first()
         if (!result) {
-          await WIKI.models.assetFolders.query().insert({
+          const res = await WIKI.models.assetFolders.query().insert({
             slug: folderSlug,
             name: folderSlug,
             parentId: parentFolderId
           })
           return {
-            responseResult: graphHelper.generateSuccess('Asset Folder has been created successfully.')
+            responseResult: graphHelper.generateSuccess('Asset Folder has been created successfully.'),
+            id: res.id
           }
         } else {
           throw new WIKI.Error.AssetFolderExists()

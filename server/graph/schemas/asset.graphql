@@ -34,7 +34,7 @@ type AssetMutation {
     parentFolderId: Int!
     slug: String!
     name: String
-  ): DefaultResponse @auth(requires: ["manage:system", "write:assets"])
+  ): CreateFolderResponse
 
   renameAsset(
     id: Int!
@@ -76,4 +76,9 @@ enum AssetKind {
   IMAGE
   BINARY
   ALL
+}
+
+type CreateFolderResponse {
+  responseResult: ResponseStatus
+  id: Int!
 }
