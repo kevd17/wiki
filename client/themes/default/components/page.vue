@@ -1,18 +1,6 @@
 <template lang="pug">
   v-app(v-scroll='upBtnScroll', :dark='darkMode')
     nav-header
-    v-navigation-drawer(
-      :class='darkMode ? `grey darken-4-d4` : `primary`'
-      dark
-      app
-      clipped
-      mobile-break-point='600'
-      :temporary='$vuetify.breakpoint.mdAndDown'
-      v-model='navShown'
-      :right='$vuetify.rtl'
-      )
-      vue-scroll(:ops='scrollStyle')
-        nav-sidebar(:color='darkMode ? `grey darken-4-d4` : `primary`', :items='sidebar')
 
     v-fab-transition
       v-btn(
@@ -395,12 +383,16 @@ export default {
     this.$store.commit('page/SET_MODE', 'view')
   },
   mounted () {
+    if (this.description.startsWith('[redirect=')) {
+      const redirectUrl = this.description.match(/\[redirect=(.*)\]/)[1]
+      window.location.assign(redirectUrl)
+    }
     Prism.highlightAllUnder(this.$refs.container)
     this.navShown = this.$vuetify.breakpoint.smAndUp
 
     this.$nextTick(() => {
       if (window.location.hash && window.location.hash.length > 1) {
-        this.$vuetify.goTo(window.location.hash, this.scrollOpts)
+        this.$vuetify.goTo(decodeURIComponent(window.location.hash).replace(' ', '-'), this.scrollOpts)
       }
 
       this.$refs.container.querySelectorAll(`a[href^="#"], a[href^="${window.location.href.replace(window.location.hash, '')}#"]`).forEach(el => {
