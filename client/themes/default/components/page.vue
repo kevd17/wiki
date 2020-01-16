@@ -391,10 +391,12 @@ export default {
     this.navShown = this.$vuetify.breakpoint.smAndUp
 
     this.$nextTick(() => {
+      // Fix bug kbd
+      this.$refs.container.innerHTML = this.$refs.container.innerHTML.replace('&lt;kbd&gt;', '<kbd>').replace('&lt;/kbd&gt;', '</kbd>')
+
       if (window.location.hash && window.location.hash.length > 1) {
         this.$vuetify.goTo(decodeURIComponent(window.location.hash).replace(' ', '-'), this.scrollOpts)
       }
-
       this.$refs.container.querySelectorAll(`a[href^="#"], a[href^="${window.location.href.replace(window.location.hash, '')}#"]`).forEach(el => {
         el.onclick = ev => {
           ev.preventDefault()
