@@ -312,7 +312,7 @@
   // ---------------------------------
 
   ol, ul {
-    padding: 1rem 0 0 1rem;
+    padding: 1rem 0 0 0;
     list-style-position: outside;
 
     li > ul, li > ol {
@@ -435,7 +435,7 @@
   }
 
   ul {
-    list-style: square outside;
+    list-style: none;
   }
 
   // ---------------------------------
