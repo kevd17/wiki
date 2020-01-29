@@ -52,6 +52,9 @@ import { Base64 } from 'js-base64'
 import createPageMutation from 'gql/editor/create.gql'
 import updatePageMutation from 'gql/editor/update.gql'
 
+import createAssetFolderMutation from 'gql/editor/editor-media-mutation-folder-create.gql'
+import getAssetFolderQuery from 'gql/editor/editor-media-query-folder-list.gql'
+
 import editorStore from '../store/editor'
 
 /* global WIKI */
@@ -116,6 +119,7 @@ export default {
   },
   data() {
     return {
+      parentFolderId: 0,
       dialogProps: false,
       dialogProgress: false,
       dialogEditorSelector: false,
@@ -193,6 +197,30 @@ export default {
           // --------------------------------------------
           // -> CREATE PAGE
           // --------------------------------------------
+          // Create assets folder
+          const foldersToCreate = this.path.split('/')
+          const foldersList = await this.$apollo.query({
+            query: getAssetFolderQuery,
+            variables: {
+              parentFolderId: 0
+            }
+          })
+          const existingFolders = foldersList.data.assets.folders
+          for (const folderToCreate of foldersToCreate) {
+            const resultat = existingFolders.find(existFolder => existFolder.name === folderToCreate)
+            if (!resultat) {
+              const resp = await this.$apollo.mutate({
+                mutation: createAssetFolderMutation,
+                variables: {
+                  parentFolderId: this.parentFolderId,
+                  slug: folderToCreate
+                }
+              })
+              this.parentFolderId = resp.data.assets.createFolder.id
+            } else {
+              this.parentFolderId = resultat.id
+            }
+          }
 
           let resp = await this.$apollo.mutate({
             mutation: createPageMutation,
