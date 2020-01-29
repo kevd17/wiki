@@ -325,6 +325,8 @@
     }
 
     &.links-list {
+      list-style: none;
+      padding-left: 0;
       li {
         background-color: mc('grey', '50');
         background-image: linear-gradient(to bottom, #FFF, mc('grey', '50'));
@@ -434,8 +436,8 @@
     }
   }
 
-  ul {
-    list-style: none;
+  ul, ol {
+    padding-left: 20px;
   }
 
   // ---------------------------------
