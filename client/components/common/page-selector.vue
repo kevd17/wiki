@@ -102,8 +102,6 @@
 import _ from 'lodash'
 import { get } from 'vuex-pathify'
 import pageTreeQuery from 'gql/common/common-pages-query-tree.gql'
-import createAssetFolderMutation from 'gql/editor/editor-media-mutation-folder-create.gql'
-import getAssetFolderQuery from 'gql/editor/editor-media-query-folder-list.gql'
 
 const localeSegmentRegex = /^[A-Z]{2}(-[A-Z]{2})?$/i
 
@@ -134,7 +132,6 @@ export default {
   },
   data() {
     return {
-      parentFolderId: 0,
       treeViewCacheId: 0,
       searchLoading: false,
       currentLocale: siteConfig.lang,
@@ -262,34 +259,6 @@ export default {
       this.isShown = false
     },
     async open() {
-      // Create assets folder
-      const foldersToCreate = this.currentPath.split('/')
-      try {
-        const foldersList = await this.$apollo.query({
-          query: getAssetFolderQuery,
-          variables: {
-            parentFolderId: 0
-          }
-        })
-        const existingFolders = foldersList.data.assets.folders
-        for (const folderToCreate of foldersToCreate) {
-          const resultat = existingFolders.find(existFolder => existFolder.name === folderToCreate)
-          if (!resultat) {
-            const resp = await this.$apollo.mutate({
-              mutation: createAssetFolderMutation,
-              variables: {
-                parentFolderId: this.parentFolderId,
-                slug: folderToCreate
-              }
-            })
-            this.parentFolderId = resp.data.assets.createFolder.id
-          } else {
-            this.parentFolderId = resultat.id
-          }
-        }
-      } catch (err) {
-        this.$store.commit('pushGraphError', err)
-      }
       const exit = this.openHandler({
         locale: this.currentLocale,
         path: this.currentPath
