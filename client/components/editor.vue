@@ -53,7 +53,7 @@ import createPageMutation from 'gql/editor/create.gql'
 import updatePageMutation from 'gql/editor/update.gql'
 
 import createAssetFolderMutation from 'gql/editor/editor-media-mutation-folder-create.gql'
-import getAssetFolderQuery from 'gql/editor/editor-media-query-folder-list.gql'
+import getAssetFoldersQuery from 'gql/editor/editor-media-query-all-folder-list.gql'
 
 import editorStore from '../store/editor'
 
@@ -200,12 +200,9 @@ export default {
           // Create assets folder
           const foldersToCreate = this.path.split('/')
           const foldersList = await this.$apollo.query({
-            query: getAssetFolderQuery,
-            variables: {
-              parentFolderId: 0
-            }
+            query: getAssetFoldersQuery
           })
-          const existingFolders = foldersList.data.assets.folders
+          const existingFolders = foldersList.data.assets.allFolders
           for (const folderToCreate of foldersToCreate) {
             const resultat = existingFolders.find(existFolder => existFolder.name === folderToCreate)
             if (!resultat) {

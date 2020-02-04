@@ -135,7 +135,7 @@ export default {
   },
   computed: {
     isLatestVersion() {
-      return this.info.currentVersion === this.info.latestVersion
+      return this.info.currentVersion >= this.info.latestVersion
     },
     info: get('admin/info'),
     permissions: get('user/permissions')

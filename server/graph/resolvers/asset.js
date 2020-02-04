@@ -32,6 +32,11 @@ module.exports = {
       })
       // TODO: Filter by page rules
       return result
+    },
+    async allFolders(obj, args, context) {
+      const result = await WIKI.models.assetFolders.query()
+      // TODO: Filter by page rules
+      return result
     }
   },
   AssetMutation: {
@@ -52,6 +57,7 @@ module.exports = {
             name: folderSlug,
             parentId: parentFolderId
           })
+          console.log('res', res)
           return {
             responseResult: graphHelper.generateSuccess('Asset Folder has been created successfully.'),
             id: res.id
