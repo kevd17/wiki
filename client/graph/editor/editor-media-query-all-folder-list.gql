@@ -1,0 +1,9 @@
+query {
+  assets {
+    allFolders {
+      id
+      name
+      slug
+    }
+  }
+}
