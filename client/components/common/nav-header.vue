@@ -18,7 +18,7 @@
       )
     v-layout(row)
       v-flex(xs6, md4)
-        v-toolbar.nav-header-inner.pl-3(color='black', dark, flat)
+        v-toolbar.nav-header-inner(color='black', dark, flat, :class='$vuetify.rtl ? `pr-3` : `pl-3`')
           v-avatar(tile, size='34', @click='goHome')
             v-img.org-logo(:src='logoUrl')
           //- v-menu(open-on-hover, offset-y, bottom, left, min-width='250', transition='slide-y-transition')
@@ -93,7 +93,7 @@
           //- LANGUAGES
 
           template(v-if='mode === `view` && locales.length > 0')
-            v-menu(offset-y, bottom, transition='slide-y-transition')
+            v-menu(offset-y, bottom, transition='slide-y-transition', max-height='320px', min-width='210px', left)
               template(v-slot:activator='{ on: menu }')
                 v-tooltip(bottom)
                   template(v-slot:activator='{ on: tooltip }')
@@ -110,7 +110,7 @@
           //- PAGE ACTIONS
 
           template(v-if='isAuthenticated && path && mode !== `edit`')
-            v-menu(offset-y, bottom, transition='slide-y-transition')
+            v-menu(offset-y, bottom, transition='slide-y-transition', left)
               template(v-slot:activator='{ on: menu }')
                 v-tooltip(bottom)
                   template(v-slot:activator='{ on: tooltip }')
@@ -144,7 +144,7 @@
 
           //- NEW PAGE
 
-          template(v-if='isAuthenticated')
+          template(v-if='isAuthenticated && path && mode !== `edit`')
             v-tooltip(bottom)
               template(v-slot:activator='{ on }')
                 v-btn(icon, tile, height='64', v-on='on', @click='pageNew')
@@ -154,7 +154,7 @@
 
           //- ACCOUNT
 
-          v-menu(v-if='isAuthenticated', offset-y, bottom, min-width='300', transition='slide-y-transition')
+          v-menu(v-if='isAuthenticated', offset-y, bottom, min-width='300', transition='slide-y-transition', left)
             template(v-slot:activator='{ on: menu }')
               v-tooltip(bottom)
                 template(v-slot:activator='{ on: tooltip }')
@@ -461,7 +461,7 @@ export default {
   &-dev {
     background-color: mc('red', '600');
     position: absolute;
-    top: 10px;
+    top: 11px;
     left: 255px;
     padding: 5px 15px;
     border-radius: 5px;

@@ -16,6 +16,7 @@ Funds donated via Patreon go directly to support lead developer [Nicolas Giard](
 
 - M. Scott Ford ([@mscottford](https://github.com/mscottford))
 - Nina Reynolds ([@cutecycle](https://github.com/cutecycle))
+- aniketpanjwani ([@aniketpanjwani](https://github.com/aniketpanjwani))
 
 <h2 align="center">Sponsors via OpenCollective</h2>
 
@@ -37,15 +38,17 @@ Funds donated via Patreon go directly to support lead developer [Nicolas Giard](
 - Alex Balabanov
 - Brandon Curtis
 - Douglas Lassance
-- Edward
 - Ernie Reid
 - Etienne
+- Flemis Jurgenheimer
 - Günter Pavlas
-- Kyle Thomas
+- Ian
+- Josh Stewart
 - Loïc CRAMPON
 - Matt Gedigian
+- Philipp Schürch
 - Richeir
-- Wasim Adetunji
+- Stepan Sokolovskyi
 - 张白驹
 <!--5 end-->
 
