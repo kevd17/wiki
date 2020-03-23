@@ -213,11 +213,11 @@
         :right='$vuetify.rtl'
         :left='!$vuetify.rtl'
         small
-        depressed
+        :depressed='this.$vuetify.breakpoint.mdAndUp'
         @click='$vuetify.goTo(0, scrollOpts)'
         color='primary'
         dark
-        :style='$vuetify.rtl ? `right: 235px;` : `left: 235px;`'
+        :style='upBtnPosition'
         )
         v-icon mdi-arrow-up
 </template>
@@ -350,7 +350,8 @@ export default {
             background: '#64B5F6'
           }
         }
-      }
+      },
+      winWidth: 0
     }
   },
   computed: {
@@ -373,7 +374,14 @@ export default {
         return result
       }, []))
     },
-    pageUrl () { return window.location.href }
+    pageUrl () { return window.location.href },
+    upBtnPosition () {
+      if (this.$vuetify.breakpoint.mdAndUp) {
+        return this.$vuetify.rtl ? `right: 235px;` : `left: 235px;`
+      } else {
+        return this.$vuetify.rtl ? `right: 65px;` : `left: 65px;`
+      }
+    }
   },
   created() {
     this.$store.commit('page/SET_AUTHOR_ID', this.authorId)
@@ -395,12 +403,19 @@ export default {
       const redirectUrl = this.description.match(/\[redirect=(.*)\]/)[1]
       window.location.assign(redirectUrl)
     }
+    // -> Check side navigation visibility
+    this.handleSideNavVisibility()
+    window.addEventListener('resize', _.debounce(() => {
+      this.handleSideNavVisibility()
+    }, 500))
+
+    // -> Highlight Code Blocks
     Prism.highlightAllUnder(this.$refs.container)
-    this.navShown = this.$vuetify.breakpoint.smAndUp
 
     // Fix bug kbd
     this.$refs.container.innerHTML = this.$refs.container.innerHTML.replace(/&lt;kbd&gt;/g, '<kbd>').replace(/&lt;\/kbd&gt;/g, '</kbd>')
 
+    // -> Handle anchor scrolling
     this.$nextTick(() => {
       if (window.location.hash && window.location.hash.length > 1) {
         this.$vuetify.goTo(decodeURIComponent(window.location.hash).replace(' ', '-'), this.scrollOpts)
@@ -442,6 +457,15 @@ export default {
     },
     pageDelete () {
       this.$root.$emit('pageDelete')
+    },
+    handleSideNavVisibility () {
+      if (window.innerWidth === this.winWidth) { return }
+      this.winWidth = window.innerWidth
+      if (this.$vuetify.breakpoint.mdAndUp) {
+        this.navShown = true
+      } else {
+        this.navShown = false
+      }
     }
   }
 }
