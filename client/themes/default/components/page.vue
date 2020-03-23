@@ -399,12 +399,10 @@ export default {
     this.$store.commit('page/SET_MODE', 'view')
   },
   mounted () {
-<<<<<<< HEAD
     if (this.description.startsWith('[redirect=')) {
       const redirectUrl = this.description.match(/\[redirect=(.*)\]/)[1]
       window.location.assign(redirectUrl)
     }
-=======
     // -> Check side navigation visibility
     this.handleSideNavVisibility()
     window.addEventListener('resize', _.debounce(() => {
@@ -412,16 +410,12 @@ export default {
     }, 500))
 
     // -> Highlight Code Blocks
->>>>>>> 934842ab9bae1addf55dca0ed75a532d63a7ad30
     Prism.highlightAllUnder(this.$refs.container)
 
-<<<<<<< HEAD
     // Fix bug kbd
     this.$refs.container.innerHTML = this.$refs.container.innerHTML.replace(/&lt;kbd&gt;/g, '<kbd>').replace(/&lt;\/kbd&gt;/g, '</kbd>')
 
-=======
     // -> Handle anchor scrolling
->>>>>>> 934842ab9bae1addf55dca0ed75a532d63a7ad30
     this.$nextTick(() => {
       if (window.location.hash && window.location.hash.length > 1) {
         this.$vuetify.goTo(decodeURIComponent(window.location.hash).replace(' ', '-'), this.scrollOpts)
