@@ -216,10 +216,14 @@ import mdMark from 'markdown-it-mark'
 import mdFootnote from 'markdown-it-footnote'
 import mdImsize from 'markdown-it-imsize'
 import katex from 'katex'
+import 'katex/dist/contrib/mhchem'
 import twemoji from 'twemoji'
 
 // Prism (Syntax Highlighting)
 import Prism from 'prismjs'
+
+// Mermaid
+import mermaid from 'mermaid'
 
 // Helpers
 import katexHelper from './common/katex'
@@ -330,6 +334,8 @@ md.renderer.rules.emoji = (token, idx) => {
 // Vue Component
 // ========================================
 
+let mermaidId = 0
+
 export default {
   components: {
     markdownHelp
@@ -366,6 +372,7 @@ export default {
     previewShown (newValue, oldValue) {
       if (newValue && !oldValue) {
         this.$nextTick(() => {
+          this.renderMermaidDiagrams()
           Prism.highlightAllUnder(this.$refs.editorPreview)
           Array.from(this.$refs.editorPreview.querySelectorAll('pre.line-numbers')).forEach(pre => pre.classList.add('prismjs'))
         })
@@ -386,6 +393,7 @@ export default {
       this.$store.set('editor/content', newContent)
       this.previewHTML = md.render(newContent)
       this.$nextTick(() => {
+        this.renderMermaidDiagrams()
         Prism.highlightAllUnder(this.$refs.editorPreview)
         Array.from(this.$refs.editorPreview.querySelectorAll('pre.line-numbers')).forEach(pre => pre.classList.add('prismjs'))
         this.scrollSync(this.cm)
@@ -527,6 +535,15 @@ export default {
       this.$nextTick(() => {
         this.cm.refresh()
       })
+    },
+    renderMermaidDiagrams () {
+      document.querySelectorAll('.editor-markdown-preview pre.line-numbers > code.language-mermaid').forEach(elm => {
+        mermaidId++
+        const mermaidDef = elm.innerText
+        const mmElm = document.createElement('div')
+        mmElm.innerHTML = `<div id="mermaid-id-${mermaidId}">${mermaid.render(`mermaid-id-${mermaidId}`, mermaidDef)}</div>`
+        elm.parentElement.replaceWith(mmElm)
+      })
     }
   },
   mounted() {
@@ -535,6 +552,12 @@ export default {
     if (this.mode === 'create' && !this.$store.get('editor/content')) {
       this.$store.set('editor/content', '# Titre de la procédure\nDernière mise à jour de la procédure : Janvier 2019\n<b>\n\nRésumé de l\'utilité de la procédure éventuellement sur plusieurs lignes.\n</b>\n\n> **Configuration :**\nIP : 192.168.0.0\nWindows : 2016\nTomcat : 8.5.20\n{.is-info}\n\n---\n## Installation\n### 1. Configurer le nom de la machine\n\n![1_20200103_44315.jpg](/sig/serveur_services/1_20200103_44315.jpg){.elevation-3 .radius-5}\n> exemple de screenshot avec commentaire nécéssitant une attention particulière\n{.is-warning}\n\n> commentaire validant seulement une étape réalisée.\n{.is-success}\n\n<a href="https://agglo-royan.fr/" target="_blank">lien vers page de test</a>\n\n### 2. Installer et configurer un logiciel\n\n...\n\n\n## Fonctionnement / Maintenance\n\n....\n\n## Autres pages liées\n- [autre page liée 1](/modele/test1)\n- [autre page liée 2](/modele/test2)\n{.links-list}')
     }
+
+    // Initialize Mermaid API
+    mermaid.initialize({
+      startOnLoad: false,
+      theme: this.$vuetify.theme.dark ? `dark` : `default`
+    })
 
     // Initialize CodeMirror
 
