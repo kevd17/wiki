@@ -14,14 +14,17 @@
     v-list.py-2(v-if='currentMode === `custom`', dense, :class='color', :dark='dark')
       template(v-for='item of items')
         v-list-item(
-          v-if='item.kind === `link`'
-          :href='item.target'
+          v-if='item.k === `link`'
+          :href='item.t'
+          :target='item.y === `externalblank` ? `_blank` : `_self`'
+          :rel='item.y === `externalblank` ? `noopener` : ``'
           )
           v-list-item-avatar(size='24', tile)
-            v-icon {{ item.icon }}
-          v-list-item-title {{ item.label }}
-        v-divider.my-2(v-else-if='item.kind === `divider`')
-        v-subheader.pl-4(v-else-if='item.kind === `header`') {{ item.label }}
+            v-icon(v-if='item.c.match(/fa[a-z] fa-/)', size='19') {{ item.c }}
+            v-icon(v-else) {{ item.c }}
+          v-list-item-title {{ item.l }}
+        v-divider.my-2(v-else-if='item.k === `divider`')
+        v-subheader.pl-4(v-else-if='item.k === `header`') {{ item.l }}
     //-> Browse
     v-list.py-2(v-else-if='currentMode === `browse`', dense, :class='color', :dark='dark')
       template(v-if='currentParent.id > 0')
